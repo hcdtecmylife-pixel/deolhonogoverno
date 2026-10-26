@@ -32,7 +32,6 @@
   thead th:first-child { border-radius:10px 0 0 0; min-width:170px; position:sticky; left:0; background:#0b2b4a; z-index:6; }
   thead th:last-child { border-radius:0 10px 0 0; }
 
-  /* Linha de presidente no topo das colunas */
   .pres-row th { background:#1e6f9f; color:#fff; font-size:0.62rem; padding:5px 10px; text-align:center; font-weight:700; letter-spacing:0.06em; }
   .pres-row th:first-child { background:#1e6f9f; text-align:left; }
   .pres-row th.futuro { background:#2a5a8a; color:#a0c0e0; font-style:italic; }
@@ -90,6 +89,7 @@
   <div class="filtro-wrap">
     <button class="filtro-btn" id="filtroCatBtn">Categorias <span class="seta">▼</span></button>
     <div class="filtro-menu" id="filtroCatMenu">
+      <label><input type="checkbox" value="divida" checked> 💸 Dívida Pública</label>
       <label><input type="checkbox" value="economia" checked> 💰 Economia</label>
       <label><input type="checkbox" value="trabalho" checked> 👷 Trabalho & Renda</label>
       <label><input type="checkbox" value="social" checked> 🤝 Projetos Sociais</label>
@@ -123,7 +123,6 @@
 <div class="tabela-wrap">
 <table>
 <thead>
-  <!-- Linha de presidente -->
   <tr class="pres-row">
     <th>Indicador</th>
     <th><span class="nome-pres">Lula</span></th>
@@ -142,6 +141,28 @@
   </tr>
 </thead>
 <tbody id="corpo">
+
+  <!-- ===== DÍVIDA PÚBLICA (NOVO — PRIMEIRO ITEM) ===== -->
+  <tr class="cat-row" data-cat="divida"><td colspan="6">💸 Dívida Pública</td></tr>
+
+  <tr data-cat="divida" data-tend="vermelho">
+    <td class="nome">Juros Nominais da Dívida<small>Acumulado 12 meses (setor público consolidado)</small></td>
+    <td>
+      <div class="valor-cell">
+        <span class="dot vermelho"></span>
+        <div>
+          <span class="valor-num">R$ 1,182 tri</span>
+          <small class="data-col">8,86% do PIB · Ago/2026 (BC)</small>
+          <span class="variacao vermelho">— (referência)</span>
+        </div>
+      </div>
+      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
+    </td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+  </tr>
 
   <!-- ===== ECONOMIA ===== -->
   <tr class="cat-row" data-cat="economia"><td colspan="6">💰 Economia</td></tr>
@@ -304,7 +325,7 @@
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
 
-  <!-- Programas sociais sem dado consolidado para out/2026 -->
+  <!-- Programas sociais sem dado consolidado -->
   <tr data-cat="social" data-tend="amarelo">
     <td class="nome">Acredita no Primeiro Passo<small>Crédito para CadÚnico</small></td>
     <td><span class="sem-dado">— não localizado</span></td>
