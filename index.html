@@ -28,25 +28,59 @@
 
   table { border-collapse:collapse; width:auto; min-width:100%; }
   thead { position:sticky; top:0; z-index:5; }
-  thead th { background:#0b2b4a; color:#fff; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.04em; padding:8px 10px; text-align:left; font-weight:600; white-space:nowrap; }
-  thead th:first-child { border-radius:10px 0 0 0; min-width:170px; position:sticky; left:0; background:#0b2b4a; z-index:6; }
-  thead th:last-child { border-radius:0 10px 0 0; }
+  thead th { background:#0b2b4a; color:#fff; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.04em; padding:8px 10px; text-align:left; font-weight:600; white-space:nowrap; border-right:1px solid #1a3a5a; }
+  thead th:first-child { border-radius:10px 0 0 0; min-width:180px; position:sticky; left:0; background:#0b2b4a; z-index:6; }
+  thead th:last-child { border-radius:0 10px 0 0; border-right:none; }
 
-  .pres-row th { background:#1e6f9f; color:#fff; font-size:0.62rem; padding:5px 10px; text-align:center; font-weight:700; letter-spacing:0.06em; }
-  .pres-row th:first-child { background:#1e6f9f; text-align:left; }
+  .pres-row th { background:#1e6f9f; color:#fff; font-size:0.62rem; padding:5px 10px; text-align:center; font-weight:700; letter-spacing:0.06em; border-right:1px solid #2a7faf; }
+  .pres-row th:first-child { background:#1e6f9f; text-align:left; border-right:none; }
   .pres-row th.futuro { background:#2a5a8a; color:#a0c0e0; font-style:italic; }
   .pres-row .nome-pres { font-size:0.68rem; }
 
   thead th.futuro { background:#2a4a6a; color:#8aaccc; font-style:italic; font-size:0.6rem; }
 
-  tbody td { padding:8px 10px; vertical-align:middle; border-bottom:1px solid #eef1f5; font-size:0.8rem; white-space:nowrap; }
-  tbody td:first-child { position:sticky; left:0; background:#fff; z-index:2; border-right:1px solid #eef1f5; }
+  /* CÉLULAS DE DADOS - Aqui está a mágica para colar as colunas */
+  tbody td { 
+    padding: 10px 0; /* Zera o padding lateral */
+    vertical-align: middle; 
+    border-bottom: 1px solid #eef1f5; 
+    font-size: 0.8rem; 
+    white-space: nowrap;
+    border-right: 1px solid #eef1f5; /* Linha divisória sutil */
+    position: relative;
+    width: 130px; /* Largura fixa para as colunas ficarem iguais */
+  }
+  tbody td:first-child { 
+    position: sticky; 
+    left: 0; 
+    background: #fff; 
+    z-index: 2; 
+    padding: 10px 14px; /* Mantém padding na primeira coluna */
+    min-width: 180px;
+    border-right: 1px solid #dce4ed;
+  }
+  tbody td:last-child { border-right: none; }
 
-  .cat-row td { background:#f7f9fc; font-weight:700; color:#0b2b4a; font-size:0.72rem; letter-spacing:0.03em; text-transform:uppercase; padding:7px 10px; border-bottom:2px solid #dce4ed; }
-  .cat-row td:first-child { background:#f7f9fc; }
+  .cat-row td { 
+    background: #f7f9fc; 
+    font-weight: 700; 
+    color: #0b2b4a; 
+    font-size: 0.72rem; 
+    letter-spacing: 0.03em; 
+    text-transform: uppercase; 
+    padding: 7px 14px; 
+    border-bottom: 2px solid #dce4ed; 
+    border-right: none;
+  }
 
   .nome { font-weight:600; color:#1a2a3a; font-size:0.8rem; }
   .nome small { display:block; font-weight:400; font-size:0.62rem; color:#7a8a9e; margin-top:1px; text-transform:none; letter-spacing:0; }
+
+  /* Padding interno para o conteúdo não encostar na borda */
+  .cell-content {
+    padding-left: 10px;
+    padding-right: 5px;
+  }
 
   .valor-cell { display:flex; align-items:flex-start; gap:6px; }
   .valor-num { font-weight:700; font-size:0.88rem; color:#0b2b4a; line-height:1.2; }
@@ -62,15 +96,25 @@
   .dot.amarelo { background:#d4a017; }
   .dot.vermelho { background:#b02a37; }
 
-  .spark { margin-top:3px; display:block; width:100px; height:16px; }
-  .spark polyline { fill:none; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+  /* GRÁFICO CONTÍNUO */
+  .spark { 
+    display: block; 
+    width: 100%; /* Ocupa toda a largura da célula */
+    height: 20px; 
+    margin-top: 4px;
+    margin-left: 0;
+    margin-right: 0;
+    overflow: visible;
+  }
+  .spark polyline { 
+    fill:none; 
+    stroke-width:1.6; 
+    stroke-linecap: butt; /* Linha reta no final, sem arredondar */
+    stroke-linejoin: miter;
+  }
 
-  .data-col { color:#7a8a9e; font-size:0.62rem; display:block; margin-top:1px; }
-
-  .celula-futura { color:#c0ccda; font-size:0.7rem; font-style:italic; text-align:center; min-width:80px; }
-  .celula-futura .spark { opacity:0.3; }
-
-  .sem-dado { color:#a0aec0; font-size:0.7rem; font-style:italic; }
+  .sem-dado { color:#a0aec0; font-size:0.7rem; font-style:italic; padding-left: 10px; display: block; }
+  .celula-futura { color:#c0ccda; font-size:0.7rem; font-style:italic; text-align:center; }
 
   @media (max-width:600px) {
     body { padding:10px 4px; }
@@ -81,7 +125,7 @@
 <body>
 
 <div class="header">
-  <h1>📊 Painel Brasil <small>Evolução 2022/2023 → Out/2026</small></h1>
+  <h1>📊 Painel Brasil <small>Evolução 2022 → Out/2026</small></h1>
 </div>
 
 <div class="filtros-bar">
@@ -132,8 +176,8 @@
   </tr>
   <tr>
     <th>Indicador</th>
-    <th>2022/2023 (Ref.)</th>
-    <th>Out/2026 (Atual)</th>
+    <th>2022 (Ref.)</th>
+    <th>Out/2026</th>
     <th class="futuro">Abr/2027</th>
     <th class="futuro">Out/2027</th>
     <th class="futuro">Abr/2028</th>
@@ -147,16 +191,22 @@
   <tr data-cat="divida" data-tend="vermelho">
     <td class="nome">Juros Nominais da Dívida<small>Acumulado 12 meses (% do PIB)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">5,96%</span><small class="data-col">2022 (BCB)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">5,96%</span><small class="data-col">2022 (BCB)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <!-- Gráfico começa em x=0 e termina em x=100 (borda exata) -->
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot vermelho"></span>
-        <div><span class="valor-num">8,86%</span><small class="data-col">Ago/2026 (BCB)</small><span class="variacao vermelho">+48,7% (p.p.)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot vermelho"></span>
+          <div><span class="valor-num">8,86%</span><small class="data-col">Ago/2026 (BCB)</small><span class="variacao vermelho">+48,7% (p.p.)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,10 100,4" stroke="#b02a37"/></svg>
+      <!-- O ponto inicial (0, y) conecta com o final da coluna anterior -->
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,4" stroke="#b02a37"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -167,16 +217,20 @@
   <tr data-cat="economia" data-tend="verde">
     <td class="nome">Inflação (IPCA)<small>Acumulado no ano (%)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">5,79%</span><small class="data-col">2022 (IBGE)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">5,79%</span><small class="data-col">2022 (IBGE)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">4,58%</span><small class="data-col">Set/2026 (12m)</small><span class="variacao verde">-20,9%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">4,58%</span><small class="data-col">Set/2026 (12m)</small><span class="variacao verde">-20,9%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,12" stroke="#1e7e34"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,14" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -184,16 +238,20 @@
   <tr data-cat="economia" data-tend="amarelo">
     <td class="nome">Taxa Selic<small>Meta Copom (% ao ano)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">13,75%</span><small class="data-col">Dez/2022 (BCB)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">13,75%</span><small class="data-col">Dez/2022 (BCB)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">13,75%</span><small class="data-col">16/Set/2026</small><span class="variacao amarelo">0%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">13,75%</span><small class="data-col">16/Set/2026</small><span class="variacao amarelo">0%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -201,16 +259,20 @@
   <tr data-cat="economia" data-tend="verde">
     <td class="nome">Dólar comercial<small>Fechamento (R$)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 5,24</span><small class="data-col">30/Dez/2022</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 5,24</span><small class="data-col">30/Dez/2022</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">R$ 4,993</span><small class="data-col">23/Out/2026</small><span class="variacao verde">-4,7%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">R$ 4,993</span><small class="data-col">23/Out/2026</small><span class="variacao verde">-4,7%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,11" stroke="#1e7e34"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,13" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -218,16 +280,20 @@
   <tr data-cat="economia" data-tend="verde">
     <td class="nome">Ibovespa<small>Pontos</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">109.734</span><small class="data-col">29/Dez/2022</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">109.734</span><small class="data-col">29/Dez/2022</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">205.082</span><small class="data-col">23/Out/2026</small><span class="variacao verde">+86,9%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">205.082</span><small class="data-col">23/Out/2026</small><span class="variacao verde">+86,9%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,14 100,2" stroke="#1e7e34"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,2" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -235,16 +301,20 @@
   <tr data-cat="economia" data-tend="amarelo">
     <td class="nome">PIB<small>Crescimento anual (%)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">2,9%</span><small class="data-col">2022 (IBGE)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">2,9%</span><small class="data-col">2022 (IBGE)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">1,83%</span><small class="data-col">Out/2026 (Focus)</small><span class="variacao amarelo">-36,9%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">1,83%</span><small class="data-col">Out/2026 (Focus)</small><span class="variacao amarelo">-36,9%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,10" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,13" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -255,16 +325,20 @@
   <tr data-cat="trabalho" data-tend="verde">
     <td class="nome">Salário mínimo<small>Valor mensal (R$)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 1.212</span><small class="data-col">2022 (Bolsonaro)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 1.212</span><small class="data-col">2022</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">R$ 1.621</span><small class="data-col">01/Jan/2026</small><span class="variacao verde">+33,7%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">R$ 1.621</span><small class="data-col">01/Jan/2026</small><span class="variacao verde">+33,7%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,12 100,2" stroke="#1e7e34"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,2" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -272,33 +346,41 @@
   <tr data-cat="trabalho" data-tend="verde">
     <td class="nome">Desemprego<small>PNAD Contínua (%)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">9,3%</span><small class="data-col">Média 2022 (IBGE)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">9,3%</span><small class="data-col">Média 2022</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">5,3%</span><small class="data-col">Trim. até Ago/2026</small><span class="variacao verde">-43,0%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">5,3%</span><small class="data-col">Trim. até Ago/2026</small><span class="variacao verde">-43,0%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,4 100,12" stroke="#1e7e34"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,16" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
 
   <tr data-cat="trabalho" data-tend="amarelo">
-    <td class="nome">Poder de compra<small>% da renda restante após cesta básica</small></td>
+    <td class="nome">Poder de compra<small>% renda restante após cesta</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">44,37%</span><small class="data-col">Jun/2022 (DIEESE)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">44,37%</span><small class="data-col">Jun/2022 (DIEESE)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">47,98%</span><small class="data-col">Jun/2026</small><span class="variacao amarelo">+8,1%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">47,98%</span><small class="data-col">Jun/2026</small><span class="variacao amarelo">+8,1%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,7" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,9" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -309,16 +391,20 @@
   <tr data-cat="social" data-tend="amarelo">
     <td class="nome">Bolsa Família<small>Valor mínimo por família (R$)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 600</span><small class="data-col">2022 (Auxílio Brasil)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 600</span><small class="data-col">2022 (Auxílio Brasil)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 691</span><small class="data-col">Out/2026 (reajuste)</small><span class="variacao amarelo">+15,2%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 691</span><small class="data-col">Out/2026</small><span class="variacao amarelo">+15,2%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,6" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,7" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -326,16 +412,20 @@
   <tr data-cat="social" data-tend="amarelo">
     <td class="nome">Bolsa Família<small>Famílias atendidas (milhões)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">20,6 mi</span><small class="data-col">2022 (Auxílio Brasil)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">20,6 mi</span><small class="data-col">2022</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">19,3 mi</span><small class="data-col">Out/2026</small><span class="variacao amarelo">-6,3%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">19,3 mi</span><small class="data-col">Out/2026</small><span class="variacao amarelo">-6,3%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,10" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,13" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -343,82 +433,21 @@
   <tr data-cat="social" data-tend="amarelo">
     <td class="nome">BPC / LOAS<small>Orçamento (R$)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 96,8 bi</span><small class="data-col">2022 (LOA)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 96,8 bi</span><small class="data-col">2022 (LOA)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 122,4 bi</span><small class="data-col">LOA 2026</small><span class="variacao amarelo">+26,4%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 122,4 bi</span><small class="data-col">LOA 2026</small><span class="variacao amarelo">+26,4%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,5" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,6" stroke="#d4a017"/></svg>
     </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="social" data-tend="amarelo">
-    <td class="nome">Gás do Povo<small>Famílias atendidas</small></td>
-    <td><span class="sem-dado">— não localizado (não existia)</span></td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">15 mi</span><small class="data-col">2026</small><span class="variacao neutro">—</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
-    </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="social" data-tend="amarelo">
-    <td class="nome">Pé-de-Meia<small>Investimento acumulado (R$)</small></td>
-    <td><span class="sem-dado">— não localizado (não existia)</span></td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 21 bi</span><small class="data-col">Set/2026</small><span class="variacao neutro">—</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
-    </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="social" data-tend="amarelo">
-    <td class="nome">Minha Casa, Minha Vida<small>Investimento (R$)</small></td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 9,5 bi</span><small class="data-col">2022 (orçamento)</small><span class="variacao neutro">— (referência)</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
-    </td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 24,8 bi</span><small class="data-col">2026</small><span class="variacao amarelo">+161,1%</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,12 100,4" stroke="#d4a017"/></svg>
-    </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="social" data-tend="amarelo">
-    <td class="nome">Farmácia Popular<small>Orçamento (R$)</small></td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 2,5 bi</span><small class="data-col">2022</small><span class="variacao neutro">— (referência)</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
-    </td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 6 bi</span><small class="data-col">2026</small><span class="variacao amarelo">+140,0%</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,12 100,4" stroke="#d4a017"/></svg>
-    </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="social" data-tend="amarelo">
-    <td class="nome">Demais programas sociais<small>Acredita, PAA, FIES, Prouni, etc.</small></td>
-    <td><span class="sem-dado">— não localizado</span></td>
-    <td><span class="sem-dado">— não localizado</span></td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
 
@@ -426,30 +455,22 @@
   <tr class="cat-row" data-cat="alimentos"><td colspan="6">🥩 Alimentos</td></tr>
 
   <tr data-cat="alimentos" data-tend="amarelo">
-    <td class="nome">Picanha<small>Preço médio (R$/kg)</small></td>
-    <td><span class="sem-dado">— não localizado</span></td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 78,57/kg</span><small class="data-col">Out/2026 (BH)</small><span class="variacao neutro">—</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
-    </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="alimentos" data-tend="amarelo">
     <td class="nome">Cesta básica vs. salário<small>% do salário mínimo líquido</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">55,63%</span><small class="data-col">Jun/2022 (DIEESE)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">55,63%</span><small class="data-col">Jun/2022 (DIEESE)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">52,02%</span><small class="data-col">Jun/2026</small><span class="variacao amarelo">-6,5%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">52,02%</span><small class="data-col">Jun/2026</small><span class="variacao amarelo">-6,5%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,10" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,12" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -458,35 +479,43 @@
   <tr class="cat-row" data-cat="combustiveis"><td colspan="6">⛽ Combustíveis</td></tr>
 
   <tr data-cat="combustiveis" data-tend="vermelho">
-    <td class="nome">Gasolina comum<small>Preço médio nacional (R$/litro)</small></td>
+    <td class="nome">Gasolina comum<small>Preço médio (R$/litro)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 5,89</span><small class="data-col">Jul/2022 (ANP)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 5,89</span><small class="data-col">Jul/2022 (ANP)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot vermelho"></span>
-        <div><span class="valor-num">R$ 6,65</span><small class="data-col">Out/2026</small><span class="variacao vermelho">+12,9%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot vermelho"></span>
+          <div><span class="valor-num">R$ 6,65</span><small class="data-col">Out/2026</small><span class="variacao vermelho">+12,9%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,10 100,6" stroke="#b02a37"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,5" stroke="#b02a37"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
 
   <tr data-cat="combustiveis" data-tend="verde">
-    <td class="nome">Diesel S-10<small>Preço médio nacional (R$/litro)</small></td>
+    <td class="nome">Diesel S-10<small>Preço médio (R$/litro)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 7,55</span><small class="data-col">Jul/2022 (ANP)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">R$ 7,55</span><small class="data-col">Jul/2022 (ANP)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">R$ 7,35</span><small class="data-col">Out/2026</small><span class="variacao verde">-2,6%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">R$ 7,35</span><small class="data-col">Out/2026</small><span class="variacao verde">-2,6%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,10" stroke="#1e7e34"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,12" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -497,28 +526,20 @@
   <tr data-cat="ambiente" data-tend="verde">
     <td class="nome">Desmatamento Amazônia<small>PRODES (km²)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">11.566 km²</span><small class="data-col">2022 (INPE)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">11.566 km²</span><small class="data-col">2022 (INPE)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">3.335 km²</span><small class="data-col">Ago/25–Jul/26</small><span class="variacao verde">-71,2%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">3.335 km²</span><small class="data-col">Ago/25–Jul/26</small><span class="variacao verde">-71,2%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,2 100,14" stroke="#1e7e34"/></svg>
-    </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="ambiente" data-tend="amarelo">
-    <td class="nome">Queimadas<small>Área queimada acumulada (ha)</small></td>
-    <td><span class="sem-dado">— não localizado</span></td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">8,72 mi ha</span><small class="data-col">Jan–04/Out/2026</small><span class="variacao neutro">—</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,18" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -529,16 +550,20 @@
   <tr data-cat="seguranca" data-tend="verde">
     <td class="nome">Homicídios<small>Taxa por 100 mil hab.</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">21,7</span><small class="data-col">2022 (Atlas 2024)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">21,7</span><small class="data-col">2022 (Atlas 2024)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot verde"></span>
-        <div><span class="valor-num">20,1</span><small class="data-col">2024 (Atlas 2026)</small><span class="variacao verde">-7,4%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot verde"></span>
+          <div><span class="valor-num">20,1</span><small class="data-col">2024 (Atlas 2026)</small><span class="variacao verde">-7,4%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,11" stroke="#1e7e34"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,12" stroke="#1e7e34"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -549,31 +574,20 @@
   <tr data-cat="fiscal" data-tend="vermelho">
     <td class="nome">Dívida Bruta<small>% do PIB</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">72,9%</span><small class="data-col">Dez/2022 (BCB)</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">72,9%</span><small class="data-col">Dez/2022 (BCB)</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot vermelho"></span>
-        <div><span class="valor-num">82,9%</span><small class="data-col">Ago/2026 (BCB)</small><span class="variacao vermelho">+13,7%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot vermelho"></span>
+          <div><span class="valor-num">82,9%</span><small class="data-col">Ago/2026 (BCB)</small><span class="variacao vermelho">+13,7%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,10 100,5" stroke="#b02a37"/></svg>
-    </td>
-    <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
-  </tr>
-
-  <!-- ===== CULTURA ===== -->
-  <tr class="cat-row" data-cat="cultura"><td colspan="6">🎭 Cultura</td></tr>
-
-  <tr data-cat="cultura" data-tend="amarelo">
-    <td class="nome">Lei Rouanet<small>Captação (R$)</small></td>
-    <td><span class="sem-dado">— não localizado</span></td>
-    <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 10,7 bi</span><small class="data-col">Acum. 2023–Ago/2026</small><span class="variacao neutro">—</span></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,5" stroke="#b02a37"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -584,16 +598,20 @@
   <tr data-cat="tributos" data-tend="amarelo">
     <td class="nome">Impostos PMEs<small>Simples Nacional (faixa)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">4% a 33%</span><small class="data-col">2022</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">4% a 33%</span><small class="data-col">2022</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">4% a 33%</span><small class="data-col">2026</small><span class="variacao amarelo">0%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">4% a 33%</span><small class="data-col">2026</small><span class="variacao amarelo">0%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
@@ -601,16 +619,20 @@
   <tr data-cat="tributos" data-tend="amarelo">
     <td class="nome">Encargos trabalhistas<small>Total sobre folha (%)</small></td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">36,8%</span><small class="data-col">2022</small><span class="variacao neutro">— (referência)</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">36,8%</span><small class="data-col">2022</small><span class="variacao neutro">— (referência)</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td>
-      <div class="valor-cell"><span class="dot amarelo"></span>
-        <div><span class="valor-num">36,8%</span><small class="data-col">2026</small><span class="variacao amarelo">0%</span></div>
+      <div class="cell-content">
+        <div class="valor-cell"><span class="dot amarelo"></span>
+          <div><span class="valor-num">36,8%</span><small class="data-col">2026</small><span class="variacao amarelo">0%</span></div>
+        </div>
       </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" stroke="#d4a017"/></svg>
+      <svg class="spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 100,10" stroke="#d4a017"/></svg>
     </td>
     <td class="celula-futura">—</td><td class="celula-futura">—</td><td class="celula-futura">—</td>
   </tr>
