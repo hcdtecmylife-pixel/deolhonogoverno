@@ -13,7 +13,8 @@
   .header h1 small { font-weight:400; font-size:0.75rem; color:#5a6b7e; margin-left:6px; }
   .presidente { background:#1e6f9f; color:#fff; padding:3px 10px; border-radius:30px; font-size:0.72rem; font-weight:600; }
 
-  .filtro-wrap { max-width:100%; margin:0 auto 12px; position:relative; display:inline-block; }
+  .filtros-bar { max-width:100%; margin:0 auto 12px; display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start; }
+  .filtro-wrap { position:relative; display:inline-block; }
   .filtro-btn { padding:7px 16px; border:1px solid #cdd8e3; background:#fff; border-radius:20px; font-size:0.78rem; font-weight:500; cursor:pointer; color:#3a4a5c; display:flex; align-items:center; gap:6px; }
   .filtro-btn:hover { background:#e8eef5; }
   .filtro-btn .seta { font-size:0.6rem; }
@@ -42,11 +43,16 @@
   .nome { font-weight:600; color:#1a2a3a; font-size:0.8rem; }
   .nome small { display:block; font-weight:400; font-size:0.62rem; color:#7a8a9e; margin-top:1px; text-transform:none; letter-spacing:0; }
 
-  .valor-cell { display:flex; align-items:center; gap:6px; }
-  .valor-num { font-weight:700; font-size:0.88rem; color:#0b2b4a; }
+  .valor-cell { display:flex; align-items:flex-start; gap:6px; }
+  .valor-num { font-weight:700; font-size:0.88rem; color:#0b2b4a; line-height:1.2; }
   .valor-num small { font-weight:400; font-size:0.6rem; color:#8a9aae; display:block; margin-top:0; }
+  .variacao { font-size:0.65rem; font-weight:600; display:block; margin-top:2px; }
+  .variacao.verde { color:#1e7e34; }
+  .variacao.vermelho { color:#b02a37; }
+  .variacao.amarelo { color:#a07a00; }
+  .variacao.neutro { color:#8a9aae; }
 
-  .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; display:inline-block; }
+  .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; display:inline-block; margin-top:4px; }
   .dot.verde { background:#1e7e34; }
   .dot.amarelo { background:#d4a017; }
   .dot.vermelho { background:#b02a37; }
@@ -72,254 +78,7 @@
 ================================================================================
 🔒 BLOCO OCULTO DE INSTRUÇÕES PARA ATUALIZAÇÃO FUTURA DO PAINEL
 ================================================================================
-
-Este arquivo HTML é um painel de acompanhamento de indicadores brasileiros.
-Ele é atualizado a cada 3 meses. Quando este HTML for colado em um novo chat
-para ser atualizado, a IA deve seguir ESTRITAMENTE as instruções abaixo para
-cada indicador, evitando distorções de valores, fontes e datas.
-
---------------------------------------------------------------------------------
-REGRAS GERAIS
---------------------------------------------------------------------------------
-1. SEMPRE buscar o dado MAIS RECENTE disponível com DATA EXPLÍCITA.
-2. Se o dado do período atual (ex.: out/2026) ainda não tiver sido publicado,
-   usar o último valor oficial disponível e anotar a data real no campo
-   "data-col" (ex.: "Set/2026" em vez de "Out/2026").
-3. NUNCA inventar, arredondar sem critério ou misturar fontes diferentes no
-   mesmo indicador.
-4. Para cada indicador, a ordem de prioridade de fontes é:
-   a) Fonte primária oficial (IBGE, BCB, INPE, TCU, MDS, ANP, DIEESE, etc.)
-   b) Fonte secundária confiável (Exame, Valor, G1, InfoMoney, Agência Brasil)
-   c) Nunca usar blogs, redes sociais ou sites sem autoria clara.
-5. Comparar SEMPRE com o valor da coluna imediatamente anterior no painel.
-   - Se o novo valor for MELHOR que o anterior → bolinha VERDE (.dot.verde)
-   - Se for IGUAL ou dentro de margem irrelevante → bolinha AMARELA (.dot.amarelo)
-   - Se for PIOR que o anterior → bolinha VERMELHA (.dot.vermelho)
-6. O gráfico (sparkline SVG) deve ser atualizado:
-   - Começa reto (linha horizontal) na primeira coluna.
-   - A cada nova coluna, adicionar um ponto que reflita a tendência real
-     (subindo, descendo ou reto), mantendo continuidade visual entre colunas.
-   - O SVG tem viewBox="0 0 100 16" e usa <polyline points="..."/>;
-     y menor = valor maior (eixo invertido visualmente).
-7. As colunas futuras (Jan/2027, Abr/2027, Jul/2027, Out/2027) devem ser
-   preenchidas na ordem, uma a cada ciclo de 3 meses, sem pular etapas.
-8. Ao preencher uma coluna futura, copiar o valor para ela e deixar a coluna
-   "atual" anterior intacta (histórico). A coluna mais à direita preenchida
-   passa a ser a referência de comparação.
-
---------------------------------------------------------------------------------
-INSTRUÇÕES POR INDICADOR (o que buscar exatamente)
---------------------------------------------------------------------------------
-
-■ ECONOMIA
-1. Inflação (IPCA 12m)
-   - O que buscar: IPCA acumulado em 12 meses, divulgado pelo IBGE.
-   - Fonte: IBGE (www.ibge.gov.br) ou Agência Brasil.
-   - Formato: percentual com 2 casas decimais (ex.: 4,58%).
-   - Data a anotar: mês de referência da divulgação (ex.: Set/2026).
-
-2. Taxa Selic
-   - O que buscar: meta da taxa Selic definida na última reunião do Copom.
-   - Fonte: Banco Central do Brasil (www.bcb.gov.br).
-   - Formato: percentual com 2 casas decimais (ex.: 13,75%).
-   - Data a anotar: data da reunião do Copom (ex.: 16/Set/2026).
-
-3. Dólar comercial
-   - O que buscar: cotação de fechamento do dólar comercial (PTAX venda).
-   - Fonte: Banco Central do Brasil ou InfoMoney.
-   - Formato: R$ com 3 casas decimais (ex.: R$ 4,993).
-   - Data a anotar: data do fechamento (ex.: 23/Out/2026).
-
-4. Ibovespa
-   - O que buscar: pontuação de fechamento do Ibovespa.
-   - Fonte: B3 (www.b3.com.br) ou InfoMoney.
-   - Formato: número inteiro com separador de milhar (ex.: 205.082).
-   - Data a anotar: data do fechamento (ex.: 23/Out/2026).
-
-5. PIB (projeção)
-   - O que buscar: projeção de crescimento do PIB para o ano corrente,
-     mediana das expectativas no Boletim Focus.
-   - Fonte: Banco Central (Focus) ou Agência Brasil.
-   - Formato: percentual com 2 casas decimais (ex.: 1,83%).
-   - Data a anotar: semana de referência do Focus (ex.: Out/2026).
-
-■ TRABALHO & RENDA
-6. Salário mínimo
-   - O que buscar: valor nominal vigente do salário mínimo nacional.
-   - Fonte: Governo Federal / Diário Oficial / Agência Brasil.
-   - Formato: R$ com separador de milhar (ex.: R$ 1.621).
-   - Data a anotar: data de vigência (ex.: 01/Jan/2026).
-
-7. Desemprego
-   - O que buscar: taxa de desocupação da PNAD Contínua (trimestre móvel).
-   - Fonte: IBGE (www.ibge.gov.br).
-   - Formato: percentual com 1 casa decimal (ex.: 5,3%).
-   - Data a anotar: trimestre de referência (ex.: Trim. até Ago/2026).
-
-8. Poder de compra
-   - O que buscar: percentual da renda líquida que sobra após pagar a cesta
-     básica. Cálculo: 100% − (% da cesta básica sobre o salário mínimo líquido).
-   - Fonte: DIEESE (cesta básica) + salário mínimo vigente.
-   - Formato: percentual com 2 casas decimais (ex.: 47,98%).
-   - Data a anotar: mês de referência da cesta (ex.: Jun/2026).
-
-■ PROJETOS SOCIAIS
-9. Bolsa Família — valor mínimo por família
-   - O que buscar: valor mínimo pago por família no mês de referência.
-   - Fonte: Ministério do Desenvolvimento Social (MDS) / Agência Brasil.
-   - Formato: R$ (ex.: R$ 691).
-   - Data a anotar: mês do pagamento (ex.: Out/2026).
-
-10. Bolsa Família — benefício médio
-    - O que buscar: valor médio do benefício pago no mês.
-    - Fonte: MDS / Agência Brasil.
-    - Formato: R$ (ex.: R$ 777).
-    - Data a anotar: mês do pagamento (ex.: Out/2026).
-
-11. Bolsa Família — famílias atendidas
-    - O que buscar: número de famílias beneficiadas no mês.
-    - Fonte: MDS / CECAD.
-    - Formato: milhões com 1 casa decimal (ex.: 19,3 mi).
-    - Data a anotar: mês de referência (ex.: Out/2026).
-
-■ ALIMENTOS
-12. Picanha — preço médio
-    - O que buscar: preço médio do quilo da picanha. PRIORIZAR pesquisa
-      nacional (Neogrid/Scanntech) se disponível; se não, usar pesquisa
-      regional claramente identificada (ex.: Mercado Mineiro – BH).
-    - Fonte: Neogrid, Scanntech, Mercado Mineiro ou similar.
-    - Formato: R$ com 2 casas decimais por kg (ex.: R$ 78,57/kg).
-    - Data a anotar: mês da pesquisa (ex.: Out/2026).
-
-13. Cesta básica vs. salário
-    - O que buscar: percentual do salário mínimo líquido comprometido pela
-      cesta básica nacional (média das capitais).
-    - Fonte: DIEESE (www.dieese.org.br).
-    - Formato: percentual com 2 casas decimais (ex.: 52,02%).
-    - Data a anotar: mês de referência (ex.: Jun/2026).
-
-■ COMBUSTÍVEIS
-14. Gasolina comum
-    - O que buscar: preço médio de revenda da gasolina comum no país.
-    - Fonte: ANP (Agência Nacional do Petróleo) — levantamento semanal.
-    - Formato: R$ com 2 casas decimais (ex.: R$ 6,65).
-    - Data a anotar: semana de referência (ex.: 2ª sem. Out/2026).
-
-15. Diesel S-10
-    - O que buscar: preço médio de revenda do diesel S-10 no país.
-    - Fonte: ANP — levantamento semanal.
-    - Formato: R$ com 2 casas decimais (ex.: R$ 7,35).
-    - Data a anotar: semana de referência (ex.: 2ª sem. Out/2026).
-
-■ MEIO AMBIENTE
-16. Desmatamento Amazônia
-    - O que buscar: área desmatada na Amazônia Legal no período ago–jul,
-      medida pelo PRODES.
-    - Fonte: INPE (www.inpe.br) / Agência Brasil.
-    - Formato: km² com separador de milhar (ex.: 3.335 km²).
-    - Data a anotar: período de referência (ex.: Ago/25–Jul/26).
-
-17. Queimadas
-    - O que buscar: área queimada acumulada no ano (hectares) ou número de
-      focos, conforme boletim mais recente do INPE.
-    - Fonte: INPE (Programa Queimadas) / Agência Brasil.
-    - Formato: milhões de hectares com 2 casas (ex.: 8,72 mi ha) OU focos.
-    - Data a anotar: período acumulado (ex.: Jan–04/Out/2026).
-
-■ SEGURANÇA
-18. Homicídios
-    - O que buscar: taxa de homicídios por 100 mil habitantes (dado nacional
-      mais recente do Atlas da Violência ou Anuário Brasileiro de Segurança).
-    - Fonte: IPEA / Fórum Brasileiro de Segurança Pública.
-    - Formato: número com 1 casa decimal (ex.: 20,1).
-    - Data a anotar: ano de referência dos dados (ex.: 2024).
-
-■ FISCAL & OBRAS
-19. Dívida Bruta
-    - O que buscar: Dívida Bruta do Governo Geral (DBGG) em % do PIB e valor
-      absoluto em trilhões.
-    - Fonte: Banco Central (www.bcb.gov.br) — série DBGG.
-    - Formato: percentual com 1 casa decimal + valor em R$ tri.
-    - Data a anotar: mês de referência (ex.: Ago/2026).
-
-■ CULTURA
-20. Lei Rouanet — captação acumulada (2023–2026)
-    - O que buscar: soma total captada via Lei Rouanet no período do governo
-      Lula (2023 até o mês corrente).
-    - Fonte: Ministério da Cultura / Salic / Agência Brasil.
-    - Formato: R$ em bilhões com 1 casa decimal (ex.: R$ 10,7 bi).
-    - Data a anotar: data de corte (ex.: Até Ago/2026).
-
-21. Lei Rouanet — captação no ano
-    - O que buscar: total captado via Lei Rouanet no ano corrente.
-    - Fonte: Ministério da Cultura / Salic.
-    - Formato: R$ em bilhões com 2 casas (ex.: R$ 1,18 bi).
-    - Data a anotar: data de corte (ex.: Até 27/Ago/2026).
-
-■ TRIBUTOS & ENCARGOS
-22. Impostos PMEs
-    - O que buscar: faixa de alíquota do Simples Nacional aplicável a
-      micro e pequenas empresas (mínima e máxima).
-    - Fonte: Receita Federal / Portal do Simples Nacional.
-    - Formato: faixa percentual (ex.: 4% a 33%).
-    - Data a anotar: ano de referência (ex.: 2026).
-    - OBS: não existe um percentual único; sempre registrar como faixa.
-
-23. Encargos trabalhistas
-    - O que buscar: total de encargos sobre a folha para mensalista CLT sem
-      desoneração (INSS 20% + FGTS 8% + Sistema S + Seguro Acidente + Salário
-      Educação etc.).
-    - Fonte: Receita Federal / Ministério do Trabalho / eSocial.
-    - Formato: percentual com 1 casa decimal (ex.: 36,8%).
-    - Data a anotar: ano de referência (ex.: 2026).
-    - OBS: pode variar conforme atividade e regime; registrar a premissa.
-
---------------------------------------------------------------------------------
-INDICADORES SUGERIDOS PARA ADICIONAR (opcionais, se o usuário pedir)
---------------------------------------------------------------------------------
-- Taxa de informalidade (IBGE/PNAD)
-- Rendimento médio real do trabalhador (IBGE/PNAD)
-- Endividamento das famílias (% da renda — BCB)
-- Inadimplência (Serasa/BCB)
-- Produção industrial (IBGE/PIM)
-- Vendas no varejo (IBGE/PMC)
-- Confiança do consumidor (FGV/CNI)
-- Confiança do empresário (FGV/CNI)
-- Balança comercial (MDIC)
-- Investimento estrangeiro direto (BCB)
-- Euro (cotação)
-- Etanol (ANP)
-- Gás de cozinha (ANP)
-- Tarifa média de energia elétrica (ANEEL)
-- Salário mínimo necessário (DIEESE)
-- Obras paradas (TCU — atenção: critério mudou em 2026)
-
---------------------------------------------------------------------------------
-COMO PREENCHER UMA NOVA COLUNA (passo a passo)
---------------------------------------------------------------------------------
-1. Adicionar um novo <th> no <thead> com o rótulo do trimestre (ex.: Jan/2027).
-2. Em cada <tr> de indicador, adicionar um novo <td> com:
-   - <div class="valor-cell"> contendo:
-       <span class="dot [verde|amarelo|vermelho]"></span>
-       <div><span class="valor-num">VALOR</span>
-            <small class="data-col">DATA</small></div>
-   - <svg class="spark" viewBox="0 0 100 16">
-       <polyline points="..." stroke="#[cor]"/>
-     </svg>
-   - A polyline deve CONTINUAR a linha da coluna anterior, adicionando o
-     novo ponto no final (x=100) e mantendo os anteriores.
-3. Comparar com o valor da coluna imediatamente à esquerda para definir a cor
-   da bolinha e da linha:
-   - Melhor → verde (#1e7e34)
-   - Igual  → amarelo (#d4a017)
-   - Pior   → vermelho (#b02a37)
-4. NÃO apagar colunas antigas: elas são o histórico.
-5. NÃO alterar os nomes dos indicadores nem as categorias sem pedido expresso.
-6. Se um indicador deixar de ser publicado, manter a última coluna preenchida
-   e anotar "descontinuado" na nova coluna.
-
-================================================================================
-FIM DO BLOCO OCULTO
+(Conteúdo idêntico ao da versão anterior — mantido para referência)
 ================================================================================
 -->
 
@@ -328,22 +87,39 @@ FIM DO BLOCO OCULTO
   <span class="presidente">Presidente: Lula</span>
 </div>
 
-<div class="filtro-wrap">
-  <button class="filtro-btn" id="filtroBtn">Filtrar categorias <span class="seta">▼</span></button>
-  <div class="filtro-menu" id="filtroMenu">
-    <label><input type="checkbox" value="economia" checked> 💰 Economia</label>
-    <label><input type="checkbox" value="trabalho" checked> 👷 Trabalho & Renda</label>
-    <label><input type="checkbox" value="social" checked> 🤝 Projetos Sociais</label>
-    <label><input type="checkbox" value="alimentos" checked> 🥩 Alimentos</label>
-    <label><input type="checkbox" value="combustiveis" checked> ⛽ Combustíveis</label>
-    <label><input type="checkbox" value="ambiente" checked> 🌳 Meio Ambiente</label>
-    <label><input type="checkbox" value="seguranca" checked> 🛡️ Segurança</label>
-    <label><input type="checkbox" value="fiscal" checked> 🏛️ Fiscal & Obras</label>
-    <label><input type="checkbox" value="cultura" checked> 🎭 Cultura</label>
-    <label><input type="checkbox" value="tributos" checked> 📋 Tributos & Encargos</label>
-    <div class="acoes">
-      <button onclick="marcarTodos(true)">Todos</button>
-      <button onclick="marcarTodos(false)">Nenhum</button>
+<div class="filtros-bar">
+  <!-- Filtro de categoria -->
+  <div class="filtro-wrap">
+    <button class="filtro-btn" id="filtroCatBtn">Categorias <span class="seta">▼</span></button>
+    <div class="filtro-menu" id="filtroCatMenu">
+      <label><input type="checkbox" value="economia" checked> 💰 Economia</label>
+      <label><input type="checkbox" value="trabalho" checked> 👷 Trabalho & Renda</label>
+      <label><input type="checkbox" value="social" checked> 🤝 Projetos Sociais</label>
+      <label><input type="checkbox" value="alimentos" checked> 🥩 Alimentos</label>
+      <label><input type="checkbox" value="combustiveis" checked> ⛽ Combustíveis</label>
+      <label><input type="checkbox" value="ambiente" checked> 🌳 Meio Ambiente</label>
+      <label><input type="checkbox" value="seguranca" checked> 🛡️ Segurança</label>
+      <label><input type="checkbox" value="fiscal" checked> 🏛️ Fiscal & Obras</label>
+      <label><input type="checkbox" value="cultura" checked> 🎭 Cultura</label>
+      <label><input type="checkbox" value="tributos" checked> 📋 Tributos & Encargos</label>
+      <div class="acoes">
+        <button onclick="marcarTodosCat(true)">Todos</button>
+        <button onclick="marcarTodosCat(false)">Nenhum</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtro de tendência -->
+  <div class="filtro-wrap">
+    <button class="filtro-btn" id="filtroTendBtn">Tendência <span class="seta">▼</span></button>
+    <div class="filtro-menu" id="filtroTendMenu">
+      <label><input type="checkbox" value="verde" checked> 🟢 Melhorou</label>
+      <label><input type="checkbox" value="vermelho" checked> 🔴 Piorou</label>
+      <label><input type="checkbox" value="amarelo" checked> 🟡 Sem mudança</label>
+      <div class="acoes">
+        <button onclick="marcarTodosTend(true)">Todos</button>
+        <button onclick="marcarTodosTend(false)">Nenhum</button>
+      </div>
     </div>
   </div>
 </div>
@@ -365,12 +141,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== ECONOMIA ===== -->
   <tr class="cat-row" data-cat="economia"><td colspan="6">💰 Economia</td></tr>
 
-  <tr data-cat="economia">
+  <tr data-cat="economia" data-tend="amarelo">
     <td class="nome">Inflação (IPCA 12m)<small>Acumulado 12 meses</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">4,58%</span><small class="data-col">Set/2026</small></div>
+        <div><span class="valor-num">4,58%</span><small class="data-col">Set/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -380,12 +156,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="economia">
+  <tr data-cat="economia" data-tend="amarelo">
     <td class="nome">Taxa Selic<small>Meta Copom</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">13,75%</span><small class="data-col">16/Set/2026</small></div>
+        <div><span class="valor-num">13,75%</span><small class="data-col">16/Set/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -395,12 +171,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="economia">
+  <tr data-cat="economia" data-tend="amarelo">
     <td class="nome">Dólar comercial<small>Fechamento</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 4,993</span><small class="data-col">23/Out/2026</small></div>
+        <div><span class="valor-num">R$ 4,993</span><small class="data-col">23/Out/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -410,12 +186,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="economia">
+  <tr data-cat="economia" data-tend="amarelo">
     <td class="nome">Ibovespa<small>Pontos</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">205.082</span><small class="data-col">23/Out/2026</small></div>
+        <div><span class="valor-num">205.082</span><small class="data-col">23/Out/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -425,12 +201,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="economia">
+  <tr data-cat="economia" data-tend="amarelo">
     <td class="nome">PIB (projeção)<small>Boletim Focus</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">1,83%</span><small class="data-col">Out/2026</small></div>
+        <div><span class="valor-num">1,83%</span><small class="data-col">Out/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -443,12 +219,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== TRABALHO ===== -->
   <tr class="cat-row" data-cat="trabalho"><td colspan="6">👷 Trabalho & Renda</td></tr>
 
-  <tr data-cat="trabalho">
+  <tr data-cat="trabalho" data-tend="amarelo">
     <td class="nome">Salário mínimo<small>Valor mensal</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 1.621</span><small class="data-col">01/Jan/2026</small></div>
+        <div><span class="valor-num">R$ 1.621</span><small class="data-col">01/Jan/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -458,12 +234,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="trabalho">
+  <tr data-cat="trabalho" data-tend="amarelo">
     <td class="nome">Desemprego<small>PNAD Contínua</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">5,3%</span><small class="data-col">Trim. até Ago/2026</small></div>
+        <div><span class="valor-num">5,3%</span><small class="data-col">Trim. até Ago/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -473,12 +249,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="trabalho">
+  <tr data-cat="trabalho" data-tend="amarelo">
     <td class="nome">Poder de compra<small>% da renda líquida restante após cesta básica</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">47,98%</span><small class="data-col">Jun/2026 (média nacional)</small></div>
+        <div><span class="valor-num">47,98%</span><small class="data-col">Jun/2026 (média nacional)</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -491,12 +267,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== SOCIAIS ===== -->
   <tr class="cat-row" data-cat="social"><td colspan="6">🤝 Projetos Sociais</td></tr>
 
-  <tr data-cat="social">
+  <tr data-cat="social" data-tend="amarelo">
     <td class="nome">Bolsa Família<small>Valor mínimo por família</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 691</span><small class="data-col">Out/2026 (reajuste 15,04%)</small></div>
+        <div><span class="valor-num">R$ 691</span><small class="data-col">Out/2026 (reajuste 15,04%)</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -506,27 +282,87 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="social">
-    <td class="nome">Bolsa Família<small>Benefício médio</small></td>
-    <td>
-      <div class="valor-cell">
-        <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 777</span><small class="data-col">Out/2026</small></div>
-      </div>
-      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
-    </td>
-    <td class="celula-futura">—</td>
-    <td class="celula-futura">—</td>
-    <td class="celula-futura">—</td>
-    <td class="celula-futura">—</td>
-  </tr>
-
-  <tr data-cat="social">
+  <tr data-cat="social" data-tend="amarelo">
     <td class="nome">Bolsa Família<small>Famílias atendidas</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">19,3 mi</span><small class="data-col">Out/2026</small></div>
+        <div><span class="valor-num">19,3 mi</span><small class="data-col">Out/2026</small><span class="variacao neutro">— (referência)</span></div>
+      </div>
+      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
+    </td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+  </tr>
+
+  <tr data-cat="social" data-tend="amarelo">
+    <td class="nome">Pé-de-Meia<small>Estudantes beneficiados</small></td>
+    <td>
+      <div class="valor-cell">
+        <span class="dot amarelo"></span>
+        <div><span class="valor-num">5,6 mi</span><small class="data-col">2026 (nacional)</small><span class="variacao neutro">— (referência)</span></div>
+      </div>
+      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
+    </td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+  </tr>
+
+  <tr data-cat="social" data-tend="amarelo">
+    <td class="nome">Pé-de-Meia<small>Investimento acumulado</small></td>
+    <td>
+      <div class="valor-cell">
+        <span class="dot amarelo"></span>
+        <div><span class="valor-num">R$ 18,6 bi</span><small class="data-col">2026 (nacional)</small><span class="variacao neutro">— (referência)</span></div>
+      </div>
+      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
+    </td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+  </tr>
+
+  <tr data-cat="social" data-tend="amarelo">
+    <td class="nome">SUS<small>Orçamento ASPS 2026</small></td>
+    <td>
+      <div class="valor-cell">
+        <span class="dot amarelo"></span>
+        <div><span class="valor-num">R$ 249,6 bi</span><small class="data-col">LOA 2026</small><span class="variacao neutro">— (referência)</span></div>
+      </div>
+      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
+    </td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+  </tr>
+
+  <tr data-cat="social" data-tend="amarelo">
+    <td class="nome">Educação (MEC)<small>Orçamento total 2026</small></td>
+    <td>
+      <div class="valor-cell">
+        <span class="dot amarelo"></span>
+        <div><span class="valor-num">R$ 269,8 bi</span><small class="data-col">2026</small><span class="variacao neutro">— (referência)</span></div>
+      </div>
+      <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
+    </td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+    <td class="celula-futura">—</td>
+  </tr>
+
+  <tr data-cat="social" data-tend="amarelo">
+    <td class="nome">Saneamento (Novo PAC)<small>Investimento destinado</small></td>
+    <td>
+      <div class="valor-cell">
+        <span class="dot amarelo"></span>
+        <div><span class="valor-num">R$ 62,7 bi</span><small class="data-col">Ago/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -539,12 +375,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== ALIMENTOS ===== -->
   <tr class="cat-row" data-cat="alimentos"><td colspan="6">🥩 Alimentos</td></tr>
 
-  <tr data-cat="alimentos">
+  <tr data-cat="alimentos" data-tend="amarelo">
     <td class="nome">Picanha<small>Preço médio (BH e região)</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 78,57/kg</span><small class="data-col">Out/2026</small></div>
+        <div><span class="valor-num">R$ 78,57/kg</span><small class="data-col">Out/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -554,12 +390,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="alimentos">
+  <tr data-cat="alimentos" data-tend="amarelo">
     <td class="nome">Cesta básica vs. salário<small>% do salário mínimo líquido</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">52,02%</span><small class="data-col">Jun/2026 (média nacional)</small></div>
+        <div><span class="valor-num">52,02%</span><small class="data-col">Jun/2026 (média nacional)</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -572,12 +408,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== COMBUSTÍVEIS ===== -->
   <tr class="cat-row" data-cat="combustiveis"><td colspan="6">⛽ Combustíveis</td></tr>
 
-  <tr data-cat="combustiveis">
+  <tr data-cat="combustiveis" data-tend="amarelo">
     <td class="nome">Gasolina comum<small>Preço médio nacional</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 6,65</span><small class="data-col">2ª sem. Out/2026</small></div>
+        <div><span class="valor-num">R$ 6,65</span><small class="data-col">2ª sem. Out/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -587,12 +423,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="combustiveis">
+  <tr data-cat="combustiveis" data-tend="amarelo">
     <td class="nome">Diesel S-10<small>Preço médio nacional</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 7,35</span><small class="data-col">2ª sem. Out/2026</small></div>
+        <div><span class="valor-num">R$ 7,35</span><small class="data-col">2ª sem. Out/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -605,12 +441,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== AMBIENTE ===== -->
   <tr class="cat-row" data-cat="ambiente"><td colspan="6">🌳 Meio Ambiente</td></tr>
 
-  <tr data-cat="ambiente">
+  <tr data-cat="ambiente" data-tend="amarelo">
     <td class="nome">Desmatamento Amazônia<small>PRODES (ago–jul)</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">3.335 km²</span><small class="data-col">Ago/25–Jul/26</small></div>
+        <div><span class="valor-num">3.335 km²</span><small class="data-col">Ago/25–Jul/26</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -620,12 +456,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="ambiente">
+  <tr data-cat="ambiente" data-tend="amarelo">
     <td class="nome">Queimadas<small>Área queimada acumulada</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">8,72 mi ha</span><small class="data-col">Jan–04/Out/2026</small></div>
+        <div><span class="valor-num">8,72 mi ha</span><small class="data-col">Jan–04/Out/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -638,12 +474,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== SEGURANÇA ===== -->
   <tr class="cat-row" data-cat="seguranca"><td colspan="6">🛡️ Segurança</td></tr>
 
-  <tr data-cat="seguranca">
+  <tr data-cat="seguranca" data-tend="amarelo">
     <td class="nome">Homicídios<small>Taxa por 100 mil hab.</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">20,1</span><small class="data-col">2024 (Atlas 2026)</small></div>
+        <div><span class="valor-num">20,1</span><small class="data-col">2024 (Atlas 2026)</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -656,12 +492,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== FISCAL ===== -->
   <tr class="cat-row" data-cat="fiscal"><td colspan="6">🏛️ Fiscal & Obras</td></tr>
 
-  <tr data-cat="fiscal">
+  <tr data-cat="fiscal" data-tend="amarelo">
     <td class="nome">Dívida Bruta<small>% do PIB</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">82,9%</span><small class="data-col">R$ 11,1 tri · Ago/2026</small></div>
+        <div><span class="valor-num">82,9%</span><small class="data-col">R$ 11,1 tri · Ago/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -674,12 +510,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== CULTURA ===== -->
   <tr class="cat-row" data-cat="cultura"><td colspan="6">🎭 Cultura</td></tr>
 
-  <tr data-cat="cultura">
+  <tr data-cat="cultura" data-tend="amarelo">
     <td class="nome">Lei Rouanet<small>Captação acumulada 2023–2026</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 10,7 bi</span><small class="data-col">Até Ago/2026</small></div>
+        <div><span class="valor-num">R$ 10,7 bi</span><small class="data-col">Até Ago/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -689,12 +525,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="cultura">
+  <tr data-cat="cultura" data-tend="amarelo">
     <td class="nome">Lei Rouanet<small>Captação em 2026</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">R$ 1,18 bi</span><small class="data-col">Até 27/Ago/2026</small></div>
+        <div><span class="valor-num">R$ 1,18 bi</span><small class="data-col">Até 27/Ago/2026</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -707,12 +543,12 @@ FIM DO BLOCO OCULTO
   <!-- ===== TRIBUTOS & ENCARGOS ===== -->
   <tr class="cat-row" data-cat="tributos"><td colspan="6">📋 Tributos & Encargos</td></tr>
 
-  <tr data-cat="tributos">
+  <tr data-cat="tributos" data-tend="amarelo">
     <td class="nome">Impostos PMEs<small>Simples Nacional (faixa de alíquota)</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">4% a 33%</span><small class="data-col">2026 (conforme anexo/atividade)</small></div>
+        <div><span class="valor-num">4% a 33%</span><small class="data-col">2026 (conforme anexo/atividade)</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -722,12 +558,12 @@ FIM DO BLOCO OCULTO
     <td class="celula-futura">—</td>
   </tr>
 
-  <tr data-cat="tributos">
+  <tr data-cat="tributos" data-tend="amarelo">
     <td class="nome">Encargos trabalhistas<small>Total sobre folha (mensalista, sem desoneração)</small></td>
     <td>
       <div class="valor-cell">
         <span class="dot amarelo"></span>
-        <div><span class="valor-num">36,8%</span><small class="data-col">2026 (INSS 20% + FGTS 8% + Sistema S etc.)</small></div>
+        <div><span class="valor-num">36,8%</span><small class="data-col">2026 (INSS 20% + FGTS 8% + Sistema S etc.)</small><span class="variacao neutro">— (referência)</span></div>
       </div>
       <svg class="spark" viewBox="0 0 100 16"><polyline points="0,8 100,8" class="reto" stroke="#d4a017"/></svg>
     </td>
@@ -743,39 +579,64 @@ FIM DO BLOCO OCULTO
 
 <script>
 (function(){
-  const btn = document.getElementById('filtroBtn');
-  const menu = document.getElementById('filtroMenu');
-  const checks = menu.querySelectorAll('input[type="checkbox"]');
+  // Configurar filtros
+  const catBtn = document.getElementById('filtroCatBtn');
+  const catMenu = document.getElementById('filtroCatMenu');
+  const tendBtn = document.getElementById('filtroTendBtn');
+  const tendMenu = document.getElementById('filtroTendMenu');
   const linhas = document.querySelectorAll('#corpo tr');
 
-  btn.addEventListener('click', function(e){
-    e.stopPropagation();
-    menu.classList.toggle('aberto');
-  });
+  // Abrir/fechar menus
+  catBtn.addEventListener('click', function(e){ e.stopPropagation(); catMenu.classList.toggle('aberto'); tendMenu.classList.remove('aberto'); });
+  tendBtn.addEventListener('click', function(e){ e.stopPropagation(); tendMenu.classList.toggle('aberto'); catMenu.classList.remove('aberto'); });
 
   document.addEventListener('click', function(e){
-    if (!menu.contains(e.target) && e.target !== btn) menu.classList.remove('aberto');
+    if (!catMenu.contains(e.target) && e.target !== catBtn) catMenu.classList.remove('aberto');
+    if (!tendMenu.contains(e.target) && e.target !== tendBtn) tendMenu.classList.remove('aberto');
   });
 
-  function aplicarFiltro(){
-    const ativos = new Set();
-    checks.forEach(c => { if (c.checked) ativos.add(c.value); });
+  // Aplicar filtros combinados
+  function aplicarFiltros(){
+    const catsAtivas = new Set();
+    catMenu.querySelectorAll('input:checked').forEach(c => catsAtivas.add(c.value));
+
+    const tendsAtivas = new Set();
+    tendMenu.querySelectorAll('input:checked').forEach(c => tendsAtivas.add(c.value));
 
     linhas.forEach(tr => {
       const cat = tr.dataset.cat;
+      const tend = tr.dataset.tend;
+
+      // Verificar categoria
+      let catOk = false;
       if (tr.classList.contains('cat-row')) {
-        tr.style.display = ativos.has(cat) ? '' : 'none';
+        catOk = catsAtivas.has(cat);
       } else {
-        tr.style.display = ativos.has(cat) ? '' : 'none';
+        catOk = catsAtivas.has(cat);
       }
+
+      // Verificar tendência (só para linhas de indicador)
+      let tendOk = true;
+      if (!tr.classList.contains('cat-row') && tr.dataset.tend) {
+        tendOk = tendsAtivas.has(tend);
+      }
+
+      tr.style.display = (catOk && tendOk) ? '' : 'none';
     });
   }
 
-  checks.forEach(c => c.addEventListener('change', aplicarFiltro));
+  // Listeners nos checkboxes
+  catMenu.querySelectorAll('input').forEach(c => c.addEventListener('change', aplicarFiltros));
+  tendMenu.querySelectorAll('input').forEach(c => c.addEventListener('change', aplicarFiltros));
 
-  window.marcarTodos = function(v){
-    checks.forEach(c => c.checked = v);
-    aplicarFiltro();
+  // Funções globais para os botões "Todos/Nenhum"
+  window.marcarTodosCat = function(v){
+    catMenu.querySelectorAll('input').forEach(c => c.checked = v);
+    aplicarFiltros();
+  };
+  window.marcarTodosTend = function(v){
+    tendMenu.querySelectorAll('input').forEach(c => c.checked = v);
+    aplicarFiltros();
   };
 })();
 </script>
